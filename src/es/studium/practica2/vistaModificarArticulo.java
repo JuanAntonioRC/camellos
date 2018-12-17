@@ -76,6 +76,13 @@ public class vistaModificarArticulo extends JFrame {
 
 				if(objetoPulsado.equals(btnEliminar)) {
 
+					ItemPulsado = choice.getSelectedItem();
+
+					String [] parts = ItemPulsado.split("-");
+					id = parts[0];
+					desc = parts[1];
+					prec = parts[2];
+					cant = parts[3];
 					vistaModificarArticuloDatos.main(null);
 
 				}
@@ -92,10 +99,7 @@ public class vistaModificarArticulo extends JFrame {
 				if(objetoPulsado.equals(btnCancelar)) {
 					frame.dispose();
 				}
-				
-				if(objetoPulsado.equals(ItemPulsado)) {
-					
-				}
+
 			}
 		});
 		btnCancelar.setBounds(56, 122, 92, 26);
@@ -140,14 +144,6 @@ public class vistaModificarArticulo extends JFrame {
 				datos= datos + "-" + rs.getString("precioArticulo");
 				datos= datos + "-" + rs.getString("cantidadStockArticulo");
 				choice.add(datos);
-				
-				ItemPulsado = choice.getSelectedItem();
-
-				String [] parts = ItemPulsado.split("-");
-				id = parts[0];
-				desc = parts[1];
-				prec = parts[2];
-				cant = parts[3];
 
 			}
 		}
