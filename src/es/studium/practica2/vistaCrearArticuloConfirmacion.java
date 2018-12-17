@@ -23,7 +23,6 @@ public class vistaCrearArticuloConfirmacion extends JFrame {
 	private JPanel contentPane;
 	static vistaCrearArticuloConfirmacion frame;
 	vistaCrearArticulo vistaCrearArticulo = null;
-	operaciones operaciones = null;
 	private final static String user = "root";
 	private final static String pass = "Studium2018;";
 	
@@ -126,8 +125,7 @@ public class vistaCrearArticuloConfirmacion extends JFrame {
 		Class.forName(driver).newInstance();
 		Connection dbcon = DriverManager.getConnection(url, user, pass);
 		Statement st = dbcon.createStatement();
-		String sentencia = "INSERT INTO `DIP2-JARC`.`Articulos` (`descripcionArticulo`, `precioArticulo`, `cantidadStockArticulo`) VALUES "
-				+ "('" + vistaCrearArticulo.desc + "','" + precioConver + "','" + stockConver + "');";
+		String sentencia = "INSERT INTO `DIP2-JARC`.`Articulos` (`descripcionArticulo`, `precioArticulo`, `cantidadStockArticulo`) VALUES " + "('" + vistaCrearArticulo.desc + "','" + precioConver + "','" + stockConver + "');";
 		
 		st.executeUpdate(sentencia);
 

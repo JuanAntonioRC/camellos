@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,6 +36,8 @@ public class vistaCrearTicket extends JFrame {
 	static public String desc;
 	static public String prec;
 	static public String cant;
+	static public int contadorArticulo;
+	static public int totalTicket = 0;
 	static JTextArea textArea;
 	static public int numerAnadirParseado;
 	private final static String user = "root";
@@ -69,7 +73,7 @@ public class vistaCrearTicket extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(44, 189, 117, 29);
 		contentPane.add(btnCancelar);
@@ -81,9 +85,9 @@ public class vistaCrearTicket extends JFrame {
 					frame.dispose();
 				}
 			}
-			
+
 		});
-		
+
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(158, 189, 117, 29);
 		contentPane.add(btnAceptar);
@@ -92,49 +96,64 @@ public class vistaCrearTicket extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Object objetoPulsado = e.getSource();
 				if(objetoPulsado.equals(btnAceptar)) {
+					
 					vistaCrearTicketConfirmacion.main(null);
+
 				}
 			}
-			
+
 		});
-		
-		
+
+
 		JLabel lblArtculo = new JLabel("Artículo");
 		lblArtculo.setBounds(23, 40, 61, 16);
 		contentPane.add(lblArtculo);
-		
+
 		choice = new Choice();
 		choice.setBounds(77, 29, 129, 39);
 		contentPane.add(choice);
-		
+
 		numeroAnadir = new JTextField();
 		numeroAnadir.setBounds(212, 35, 39, 26);
 		contentPane.add(numeroAnadir);
 		numeroAnadir.setColumns(10);
-		
-		
-		
+
+
+
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Object objetoPulsado = e.getSource();
 				if(objetoPulsado.equals(btnNewButton)) {
 					parsear();
-					ItemPulsado = choice.getSelectedItem();	
-					for (int i = 0; i < numerAnadirParseado; i ++)
-					textArea.append(ItemPulsado + "\n");
-					
+					ItemPulsado = choice.getSelectedItem();
+					String [] parts = ItemPulsado.split("-");
+					id = parts[0];
+					desc = parts[1];
+					prec = parts[2];
+					cant = parts[3];
+
+					int precConver = Integer.parseInt(prec);
+
+					for (int i = 0; i < numerAnadirParseado; i ++) {
+						textArea.append(ItemPulsado + "\n");
+						contadorArticulo++;
+						totalTicket += precConver;
+						System.out.println("el total es " +totalTicket +" y el contador lleva "+ contadorArticulo);
+					}
+
+
 				}
 			}
 		});
 		btnNewButton.setBounds(258, 35, 39, 29);
 		contentPane.add(btnNewButton);
-		
+
 		textArea = new JTextArea();
 		textArea.setBounds(33, 95, 247, 82);
 		contentPane.add(textArea);
 	}
-	
+
 	public static Choice Mostrarchoice(Choice choice)
 	{
 		Connection connection = null;
@@ -142,7 +161,13 @@ public class vistaCrearTicket extends JFrame {
 		ResultSet rs;
 		try
 		{
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+			LocalDateTime now = LocalDateTime.now();  
+			System.out.println(dtf.format(now));  
+
 			String sentencia = "SELECT * FROM `DIP2-JARC`.Articulos;";
+
+
 			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);
 			//Establecer la conexión con la BD Empresa
@@ -160,14 +185,7 @@ public class vistaCrearTicket extends JFrame {
 				datos= datos + "-" + rs.getString("precioArticulo");
 				datos= datos + "-" + rs.getString("cantidadStockArticulo");
 				choice.add(datos);
-				
-				ItemPulsado = choice.getSelectedItem();
 
-				String [] parts = ItemPulsado.split("-");
-				id = parts[0];
-				desc = parts[1];
-				prec = parts[2];
-				cant = parts[3];
 
 			}
 		}
@@ -195,12 +213,13 @@ public class vistaCrearTicket extends JFrame {
 		}
 		return choice;
 	}
-	
+
 	public static void parsear() {
-		
+
 		String numeroAnadirDatos = numeroAnadir.getText().toString();
 		numerAnadirParseado = Integer.parseInt(numeroAnadirDatos);
-		
+
 	}
+
 
 }
