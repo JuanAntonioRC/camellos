@@ -56,6 +56,9 @@ public class vistaModificarArticuloDatosResultado extends JFrame {
 				if(objetoPulsado.equals(btnVolver)) {
 					
 					frame.dispose();
+					vistaModificarArticuloDatosConfirmacion.frame.dispose();
+					vistaModificarArticuloDatos.frame.dispose();
+					vistaModificarArticulo.frame.dispose();
 				}
 			}
 		});

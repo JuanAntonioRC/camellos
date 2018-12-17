@@ -25,6 +25,7 @@ public class vistaModificarArticuloDatos extends JFrame {
 	static String desc;
 	static String prec;
 	static String cant;
+	static String id;
 	static String descM;
 	static String precM;
 	static String cantM;
@@ -139,6 +140,7 @@ public class vistaModificarArticuloDatos extends JFrame {
 		descM = txDescricpion.getText().toString();
 		precM = txPrecio.getText().toString();
 		cantM = txStock.getText().toString();
+		id = vistaModificarArticulo.id;
 		
 	}
 

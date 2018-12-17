@@ -125,7 +125,6 @@ public class vistaModificarArticulo extends JFrame {
 		ResultSet rs;
 		try
 		{
-			choice.removeAll();
 			String sentencia = "SELECT * FROM `DIP2-JARC`.Articulos;";
 			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);

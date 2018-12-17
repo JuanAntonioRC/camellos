@@ -126,9 +126,9 @@ public class vistaModificarArticuloDatosConfirmacion extends JFrame {
 	}
 	
 	public void updateArticulo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		Double precioConver = Double.parseDouble(vistaModificarArticulo.desc);
-		int stockConver = Integer.parseInt(vistaModificarArticulo.cant);
-		int idParseado = Integer.parseInt(vistaModificarArticulo.id);
+		int precioConver = Integer.parseInt(vistaModificarArticuloDatos.prec);
+		int stockConver = Integer.parseInt(vistaModificarArticuloDatos.cant);
+		int idParseado = Integer.parseInt(vistaModificarArticuloDatos.id);
 
 		Class.forName(driver).newInstance();
 		Connection dbcon = DriverManager.getConnection(url, user, pass);
@@ -136,9 +136,15 @@ public class vistaModificarArticuloDatosConfirmacion extends JFrame {
 		//String sentencia = "UPDATE `DIP2-JARC`.`Articulos` SET (`descripcionArticulo`, `precioArticulo`, `cantidadStockArticulo`) VALUES "
 			//	+ "('" + vistaModificarArticulo.desc + "','" + precioConver + "','" + stockConver + "') WHERE idArticulos = ?";
 		
-		String sentencia = "UPDATE `DIP2-JARC`.`Articulos` SET `descripcionArticulo`= " + vistaModificarArticulo.desc + "," + "`precioArticulo` "+ 11 + "," + "`cantidadStockArticulo`= " + 44 + " WHERE `idArticulos`= " + 1 + ";";
-
-		st.executeUpdate(sentencia);
+		String sentencia1 = "UPDATE `DIP2-JARC`.`Articulos` SET `descripcionArticulo`= '" + vistaModificarArticulo.desc + "' WHERE idArticulos= " + idParseado; 
+		String sentencia2 = "UPDATE `DIP2-JARC`.`Articulos` SET `precioArticulo`= '" + precioConver + "' WHERE idArticulos= " + idParseado;
+		String sentencia3 = "UPDATE `DIP2-JARC`.`Articulos` SET `cantidadStockArticulo`= '" + stockConver + "' WHERE idArticulos= " + idParseado;
+		
+		//+ "`precioArticulo` " +  + "," + "`cantidadStockArticulo`= " + 44 + " WHERE `idArticulos`= " + 1 + ";";
+	
+		st.executeUpdate(sentencia1);
+		st.executeUpdate(sentencia2);
+		st.executeUpdate(sentencia3);
 
 	}
 
